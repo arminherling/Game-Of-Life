@@ -16,14 +16,14 @@ namespace GameOfLife.ConsoleUI
         {
             Console.Clear();
             stringBuilder.Clear();
-            for (int y = 0; y < height; y++)
+            for (int y = height-1; y >= 0; y--)
             {
                 for (int x = 0; x < width; x++)
                 {
                     stringBuilder.Append(cellState[x, y] == CellState.Alive ? 'X' : '.');
                 }
                 // Add a new line unless we are on the last row
-                if (y != height - 1)
+                if (y != 0)
                     stringBuilder.AppendLine();
             }
             Console.Write(stringBuilder.ToString());
