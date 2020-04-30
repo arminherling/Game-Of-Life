@@ -7,15 +7,15 @@ namespace GameOfLife.ConsoleUI
     {
         static async Task Main(string[] args)
         {
-            const int boardWidth = 80;
-            const int boardHeight = 60;
+            const int boardWidth = 140;
+            const int boardHeight = 70;
             var board = new GameBoard(boardWidth, boardHeight);
             var renderer = new ConsoleRenderer(boardWidth, boardHeight);
             while (true)
             {
                 board.Draw(renderer);
+                await Task.Delay(TimeSpan.FromSeconds(0.15));
                 board.Update();
-                await Task.Delay(TimeSpan.FromSeconds(0.5));
             }
         }
     }
