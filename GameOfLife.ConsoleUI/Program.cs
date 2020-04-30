@@ -9,13 +9,13 @@ namespace GameOfLife.ConsoleUI
         {
             const int boardWidth = 140;
             const int boardHeight = 70;
-            var board = new GameBoard(boardWidth, boardHeight);
+            var life = new GameOfLife(boardWidth, boardHeight);
             var renderer = new ConsoleRenderer(boardWidth, boardHeight);
             while (true)
             {
-                board.Draw(renderer);
+                life.Draw(renderer);
                 await Task.Delay(TimeSpan.FromSeconds(0.15));
-                board.Update();
+                life.Update();
             }
         }
     }

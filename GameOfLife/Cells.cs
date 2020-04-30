@@ -4,25 +4,34 @@ using System.Drawing;
 
 namespace GameOfLife
 {
-    public class GameBoard
+    public class Cells
     {
         private readonly int width;
         private readonly int height;
-        private Stack<CellState[,]> history = new Stack<CellState[,]>();
-        private List<Group> groups = new List<Group>();
+        private readonly CellState[,] cells;
+        private readonly List<Group> groups;
 
-        public GameBoard(int boardWidth, int boardHeight)
+        public Cells(int arrayWidth, int arrayHeight)
         {
-            width = boardWidth;
-            height = boardHeight;
+            width = arrayWidth;
+            height = arrayHeight;
+            cells = new CellState[width, height];
+            groups = new List<Group>();
             GenerateGroups();
-            PushRandomizedCells();
+            Randomize();
         }
 
-        private void PushRandomizedCells()
+        internal Cells(int arrayWidth, int arrayHeight, in CellState[,] newCells, List<Group> newGroups)
+        {
+            width = arrayWidth;
+            height = arrayHeight;
+            cells = newCells;
+            groups = newGroups;
+        }
+
+        private void Randomize()
         {
             var random = new Random();
-            var cells = new CellState[width, height];
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -32,7 +41,6 @@ namespace GameOfLife
                         : CellState.Alive;
                 }
             }
-            history.Push(cells);
         }
 
         private void GenerateGroups()
@@ -64,21 +72,19 @@ namespace GameOfLife
             }
         }
 
-        public void Update()
+        public Cells Next()
         {
-            var currentState = history.Peek();
-            var newState = new CellState[width, height];
-
+            var newCells = new CellState[width, height];
             foreach(var group in groups)
             {
-                newState[group.X, group.Y] = group.NextState(currentState);
+                newCells[group.X, group.Y] = group.NextState(cells);
             }
-            history.Push(newState);
+            return new Cells(width, height, newCells, groups);
         }
 
         public void Draw(IRenderer renderer)
         {
-            renderer.Draw(history.Peek(), width, height);
+            renderer.Draw(cells, width, height);
         }
     }
 }
