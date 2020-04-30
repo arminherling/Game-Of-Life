@@ -2,6 +2,6 @@
 {
     public interface IRenderer
     {
-        void Clear();
+        void Draw(in CellState[,] cellState, int width, int height);
     }
 }
