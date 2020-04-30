@@ -15,7 +15,7 @@ namespace GameOfLife.ConsoleUI
             {
                 life.Draw(renderer);
                 await Task.Delay(TimeSpan.FromSeconds(0.15));
-                life.Update();
+                life.StepForward();
             }
         }
     }

@@ -4,25 +4,36 @@ namespace GameOfLife
 {
     public class GameOfLife
     {
-        private Stack<Cells> history = new Stack<Cells>();
+        private List<Cells> history = new List<Cells>();
 
-        public int Generation => history.Count;
+        public int Generations => history.Count;
+        public int CurrentGeneration { get; private set; } = 0;
         public GameOfLife(int boardWidth, int boardHeight)
         {
-            history.Push(new Cells(boardWidth, boardHeight));
+            history.Add(new Cells(boardWidth, boardHeight));
         }
 
         public void Draw(IRenderer renderer)
         {
-            var currentCells = history.Peek();
+            var currentCells = history[CurrentGeneration];
             currentCells.Draw(renderer);
         }
 
-        public void Update()
+        public void StepForward()
         {
-            var currentCells = history.Peek();
-            var nextState = currentCells.Next();
-            history.Push(nextState);
+            if (CurrentGeneration == Generations - 1)
+            {
+                var currentCells = history[CurrentGeneration];
+                var nextState = currentCells.Next();
+                history.Add(nextState);
+            }
+            CurrentGeneration++;
+        }
+
+        public void StepBackward()
+        {
+            if (CurrentGeneration != 0)
+                CurrentGeneration--;
         }
     }
 }
