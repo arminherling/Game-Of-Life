@@ -9,15 +9,12 @@ namespace GameOfLife.ConsoleUI
         {
             const int boardWidth = 80;
             const int boardHeight = 60;
-            var renderer = new ConsoleRenderer(boardWidth, boardHeight);
             var board = new GameBoard(boardWidth, boardHeight);
+            var renderer = new ConsoleRenderer(boardWidth, boardHeight);
             while (true)
             {
-                board.Update();
-
-                renderer.Clear();
                 board.Draw(renderer);
-
+                board.Update();
                 await Task.Delay(TimeSpan.FromSeconds(0.5));
             }
         }
