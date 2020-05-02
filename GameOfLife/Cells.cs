@@ -30,6 +30,16 @@ namespace GameOfLife
             groups = newGroups;
         }
 
+        internal void Clear()
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    cells[x, y] = CellState.Dead;
+                }
+            }
+        }
         private void Randomize()
         {
             var random = new Random();

@@ -9,6 +9,12 @@ namespace GameOfLife
 
         public int Generations => history.Count;
         public int CurrentGeneration { get; private set; } = 0;
+
+        public void ClearCurrentCells()
+        {
+            history[CurrentGeneration].Clear();
+        }
+
         public GameOfLife(int boardWidth, int boardHeight)
         {
             history.Add(new Cells(boardWidth, boardHeight));

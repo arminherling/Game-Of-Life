@@ -60,6 +60,8 @@ namespace GameOfLife.SFML
                 commands.Enqueue(new TogglePause(TogglePause));
             else if (e.Code == Keyboard.Key.R)
                 commands.Enqueue(new ResetGame(life));
+            else if (e.Code == Keyboard.Key.C)
+                commands.Enqueue(new ClearCells(life));
         }
 
         public void Run()
