@@ -2,7 +2,7 @@
 {
     internal class ResetGame : ICommand
     {
-        private GameOfLife life;
+        private readonly GameOfLife life;
 
         public ResetGame(GameOfLife life)
         {

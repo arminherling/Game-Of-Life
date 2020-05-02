@@ -1,6 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using System;
 using System.Collections.Generic;
 
 namespace GameOfLife.SFML
@@ -78,6 +79,12 @@ namespace GameOfLife.SFML
 
         private void Update()
         {
+            var mousePosition = Mouse.GetPosition(window);
+            if (Mouse.IsButtonPressed(Mouse.Button.Left))
+                commands.Enqueue(new SetCellAlive(life, renderer, mousePosition));
+            else if (Mouse.IsButtonPressed(Mouse.Button.Right))
+                commands.Enqueue(new SetCellDead(life, renderer, mousePosition));
+
             if (IsPlaying() && clock.ElapsedTime.AsSeconds() > 0.15f)
             {
                 clock.Restart();

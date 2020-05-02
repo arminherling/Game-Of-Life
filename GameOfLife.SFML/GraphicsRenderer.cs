@@ -5,14 +5,20 @@ namespace GameOfLife.SFML
 {
     public class GraphicsRenderer : IRenderer, Drawable
     {
+        private readonly int gridSize = 8;
+        private readonly int cellSize = 7;
         private readonly int verticesPerCell = 6;
+        private readonly Vector2i origin;
+        private readonly int rows;
+        private readonly int columns;
         Vertex[] vertices;
+
         public GraphicsRenderer(Vector2i origin, int rows, int columns)
         {
+            this.origin = origin;
+            this.rows = rows;
+            this.columns = columns;
             vertices = new Vertex[rows * columns * verticesPerCell];
-
-            var gridSize = 8;
-            var cellSize = 7;
 
             for (int y = 0; y < columns; y++)
             {
@@ -41,9 +47,24 @@ namespace GameOfLife.SFML
             }
         }
 
+        public Vector2i? PositionToCell(Vector2i position)
+        {
+            var originPosition = position - origin;
+
+            var cellIndexX = originPosition.X / gridSize;
+            var cellIndexY = originPosition.Y / gridSize;
+
+            var onGridX = cellIndexX >= 0 && cellIndexX < rows;
+            var onGridY = cellIndexY >= 0 && cellIndexY < columns;
+
+            if (onGridX && onGridY)
+                return new Vector2i(cellIndexX, cellIndexY);
+
+            return null;
+        }
+
         public void Draw(in CellState[,] cellState, int width, int height)
         {
-
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)

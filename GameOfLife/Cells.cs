@@ -22,7 +22,7 @@ namespace GameOfLife
             Randomize();
         }
 
-        internal Cells(int arrayWidth, int arrayHeight, in CellState[,] newCells, List<Group> newGroups)
+        private Cells(int arrayWidth, int arrayHeight, in CellState[,] newCells, List<Group> newGroups)
         {
             Width = arrayWidth;
             Height = arrayHeight;
@@ -40,6 +40,12 @@ namespace GameOfLife
                 }
             }
         }
+
+        internal void SetState(Point index, CellState cellState)
+        {
+            cells[index.X, index.Y] = cellState;
+        }
+
         private void Randomize()
         {
             var random = new Random();
@@ -65,18 +71,20 @@ namespace GameOfLife
                     var xLeft = x == 0 ? Width - 1 : x - 1;
                     var xRight = x == Width - 1 ? 0 : x + 1;
 
-                    var neighbors = new List<Point>();
-                    neighbors.Add(new Point(xLeft, yAbove));
-                    neighbors.Add(new Point(x, yAbove));
-                    neighbors.Add(new Point(xRight, yAbove));
-
-                    neighbors.Add(new Point(xLeft, y));
                     var center = new Point(x, y);
-                    neighbors.Add(new Point(xRight, y));
+                    var neighbors = new List<Point>
+                    {
+                        new Point(xLeft, yAbove),
+                        new Point(x, yAbove),
+                        new Point(xRight, yAbove),
 
-                    neighbors.Add(new Point(xLeft, yBelow));
-                    neighbors.Add(new Point(x, yBelow));
-                    neighbors.Add(new Point(xRight, yBelow));
+                        new Point(xLeft, y),
+                        new Point(xRight, y),
+
+                        new Point(xLeft, yBelow),
+                        new Point(x, yBelow),
+                        new Point(xRight, yBelow)
+                    };
 
                     groups.Add(new Group(center, neighbors));
                 }
@@ -86,7 +94,7 @@ namespace GameOfLife
         public Cells Next()
         {
             var newCells = new CellState[Width, Height];
-            foreach(var group in groups)
+            foreach (var group in groups)
             {
                 newCells[group.X, group.Y] = group.NextState(cells);
             }

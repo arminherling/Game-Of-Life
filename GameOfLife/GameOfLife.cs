@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace GameOfLife
 {
@@ -32,6 +33,16 @@ namespace GameOfLife
                 history.Add(history[CurrentGeneration].Next());
             }
             CurrentGeneration++;
+        }
+
+        public void SetCellAlive(Point index)
+        {
+            history[CurrentGeneration].SetState(index, CellState.Alive);
+        }
+
+        public void SetCellDead(Point index)
+        {
+            history[CurrentGeneration].SetState(index, CellState.Dead);
         }
 
         public void StepBackward()

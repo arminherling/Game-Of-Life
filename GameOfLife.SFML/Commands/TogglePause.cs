@@ -4,7 +4,7 @@ namespace GameOfLife.SFML
 {
     internal class TogglePause : ICommand
     {
-        private Action togglePauseAction;
+        private readonly Action togglePauseAction;
 
         public TogglePause(Action togglePause)
         {
