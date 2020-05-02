@@ -32,7 +32,7 @@ namespace GameOfLife.SFML
             generationDisplay = new GenerationTrackBar(new Vector2f(width / 2, height - 20), new Vector2f(512, 8), font, fontSize, life);
             renderer = new GraphicsRenderer(new Vector2i(16, 16), rows, columns);
 
-            leftInstructions = new Text("Continue (Space)\nRestart (R)", font, fontSize)
+            leftInstructions = new Text("Reset (R)   Clear (C)\nContinue (Space)", font, fontSize)
             {
                 Position = new Vector2f(16, height - 65),
                 OutlineColor = Color.Black,
@@ -44,8 +44,8 @@ namespace GameOfLife.SFML
                 OutlineColor = Color.Black,
                 OutlineThickness = 2
             };
-            var instructionWidth = rightInstructions.GetLocalBounds().Width;
-            rightInstructions.Position = new Vector2f(width - instructionWidth - 16, height - 65);
+            var rightInstructionWidth = rightInstructions.GetLocalBounds().Width;
+            rightInstructions.Position = new Vector2f(width - rightInstructionWidth - 16, height - 65);
         }
 
         private void HandleKeyPressed(object sender, KeyEventArgs e)
@@ -107,9 +107,9 @@ namespace GameOfLife.SFML
             isPlaying = !isPlaying;
 
             if (isPlaying)
-                leftInstructions.DisplayedString = "Pause (Space)\nRestart (R)";
+                leftInstructions.DisplayedString = "Reset (R)   Clear (C)\nPause (Space)";
             else
-                leftInstructions.DisplayedString = "Continue (Space)\nRestart (R)";
+                leftInstructions.DisplayedString = "Reset (R)   Clear (C)\nContinue (Space)";
         }
     }
 }
