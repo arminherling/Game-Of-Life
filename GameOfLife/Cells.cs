@@ -6,16 +6,17 @@ namespace GameOfLife
 {
     public class Cells
     {
-        private readonly int width;
-        private readonly int height;
         private readonly CellState[,] cells;
         private readonly List<Group> groups;
 
+        public int Width { get; }
+        public int Height { get; }
+
         public Cells(int arrayWidth, int arrayHeight)
         {
-            width = arrayWidth;
-            height = arrayHeight;
-            cells = new CellState[width, height];
+            Width = arrayWidth;
+            Height = arrayHeight;
+            cells = new CellState[Width, Height];
             groups = new List<Group>();
             GenerateGroups();
             Randomize();
@@ -23,8 +24,8 @@ namespace GameOfLife
 
         internal Cells(int arrayWidth, int arrayHeight, in CellState[,] newCells, List<Group> newGroups)
         {
-            width = arrayWidth;
-            height = arrayHeight;
+            Width = arrayWidth;
+            Height = arrayHeight;
             cells = newCells;
             groups = newGroups;
         }
@@ -32,9 +33,9 @@ namespace GameOfLife
         private void Randomize()
         {
             var random = new Random();
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < Width; x++)
                 {
                     cells[x, y] = random.Next(0, 2) == 0
                         ? CellState.Dead
@@ -45,14 +46,14 @@ namespace GameOfLife
 
         private void GenerateGroups()
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < Width; x++)
                 {
-                    var yAbove = y == height - 1 ? 0 : y + 1;
-                    var yBelow = y == 0 ? height - 1 : y - 1;
-                    var xLeft = x == 0 ? width - 1 : x - 1;
-                    var xRight = x == width - 1 ? 0 : x + 1;
+                    var yAbove = y == Height - 1 ? 0 : y + 1;
+                    var yBelow = y == 0 ? Height - 1 : y - 1;
+                    var xLeft = x == 0 ? Width - 1 : x - 1;
+                    var xRight = x == Width - 1 ? 0 : x + 1;
 
                     var neighbors = new List<Point>();
                     neighbors.Add(new Point(xLeft, yAbove));
@@ -74,17 +75,17 @@ namespace GameOfLife
 
         public Cells Next()
         {
-            var newCells = new CellState[width, height];
+            var newCells = new CellState[Width, Height];
             foreach(var group in groups)
             {
                 newCells[group.X, group.Y] = group.NextState(cells);
             }
-            return new Cells(width, height, newCells, groups);
+            return new Cells(Width, Height, newCells, groups);
         }
 
         public void Draw(IRenderer renderer)
         {
-            renderer.Draw(cells, width, height);
+            renderer.Draw(cells, Width, Height);
         }
     }
 }

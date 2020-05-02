@@ -58,6 +58,8 @@ namespace GameOfLife.SFML
                 commands.Enqueue(new StepBackwardGeneration(life));
             else if (e.Code == Keyboard.Key.Space)
                 commands.Enqueue(new TogglePause(TogglePause));
+            else if (e.Code == Keyboard.Key.R)
+                commands.Enqueue(new ResetGame(life));
         }
 
         public void Run()

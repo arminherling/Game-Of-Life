@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GameOfLife
 {
@@ -31,6 +32,16 @@ namespace GameOfLife
         {
             if (CurrentGeneration != 0)
                 CurrentGeneration--;
+        }
+
+        public void Reset()
+        {
+            var width = history[CurrentGeneration].Width;
+            var height = history[CurrentGeneration].Height;
+
+            history.Clear();
+            history.Add(new Cells(width, height));
+            CurrentGeneration = 0;
         }
     }
 }
