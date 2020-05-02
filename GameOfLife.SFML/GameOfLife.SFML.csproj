@@ -15,4 +15,14 @@
     <ProjectReference Include="..\GameOfLife\GameOfLife.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Font\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Font\OpenSans-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

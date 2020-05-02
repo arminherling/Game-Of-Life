@@ -9,12 +9,13 @@ namespace GameOfLife.SFML
     {
         const int rows = 124;
         const int columns = 86;
+        Clock clock = new Clock();
         Color clearColor = new Color(116, 195, 101);
         RenderWindow window;
-        Queue<ICommand> commands = new Queue<ICommand>();
         GameOfLife life;
-        Clock clock = new Clock();
         GraphicsRenderer renderer;
+        GenerationTrackBar generationDisplay;
+        Queue<ICommand> commands = new Queue<ICommand>();
 
         public Game(uint width, uint height, string title)
         {
@@ -22,6 +23,7 @@ namespace GameOfLife.SFML
             window.Closed += (_, __) => commands.Enqueue(new CloseWindow(window));
             window.KeyPressed += HandleKeyPressed;
             life = new GameOfLife(rows, columns);
+            generationDisplay = new GenerationTrackBar(new Vector2f(width/2, height - 20), new Vector2f(512, 8), life);
             renderer = new GraphicsRenderer(new Vector2i(16,16), rows, columns);
         }
 
@@ -61,6 +63,7 @@ namespace GameOfLife.SFML
             window.Clear(clearColor);
             life.DrawTo(renderer);
             window.Draw(renderer);
+            window.Draw(generationDisplay);
             window.Display();
         }
 
