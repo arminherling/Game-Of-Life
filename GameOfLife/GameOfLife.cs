@@ -13,19 +13,16 @@ namespace GameOfLife
             history.Add(new Cells(boardWidth, boardHeight));
         }
 
-        public void Draw(IRenderer renderer)
+        public void DrawTo(IRenderer renderer)
         {
-            var currentCells = history[CurrentGeneration];
-            currentCells.Draw(renderer);
+            history[CurrentGeneration].Draw(renderer);
         }
 
         public void StepForward()
         {
             if (CurrentGeneration == Generations - 1)
             {
-                var currentCells = history[CurrentGeneration];
-                var nextState = currentCells.Next();
-                history.Add(nextState);
+                history.Add(history[CurrentGeneration].Next());
             }
             CurrentGeneration++;
         }

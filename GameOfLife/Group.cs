@@ -26,8 +26,7 @@ namespace GameOfLife
                     livingNeighbors++;
             }
 
-            var currentState = cells[X, Y];
-            if (currentState == CellState.Alive)
+            if (cells[X, Y] == CellState.Alive)
             {
                 if (livingNeighbors == 2 || livingNeighbors == 3)
                     return CellState.Alive;
@@ -40,7 +39,7 @@ namespace GameOfLife
                     return CellState.Alive;
             }
 
-            return currentState;
+            return cells[X, Y];
         }
     }
 }

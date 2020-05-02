@@ -7,19 +7,22 @@ namespace GameOfLife.SFML
 {
     public class Game
     {
-        Color clearColor;
+        const int rows = 124;
+        const int columns = 86;
+        Color clearColor = new Color(116, 195, 101);
         RenderWindow window;
         Queue<ICommand> commands = new Queue<ICommand>();
         GameOfLife life;
-        Clock clock;
+        Clock clock = new Clock();
+        GraphicsRenderer renderer;
 
         public Game(uint width, uint height, string title)
         {
-            clearColor = new Color(116, 195, 101);
             window = new RenderWindow(new VideoMode(width, height), title);
             window.Closed += (_, __) => commands.Enqueue(new CloseWindow(window));
             window.KeyPressed += HandleKeyPressed;
-            life = new GameOfLife(100, 100);
+            life = new GameOfLife(rows, columns);
+            renderer = new GraphicsRenderer(new Vector2i(16,16), rows, columns);
         }
 
         private void HandleKeyPressed(object sender, KeyEventArgs e)
@@ -34,7 +37,7 @@ namespace GameOfLife.SFML
 
         public void Run()
         {
-            clock = new Clock();
+            clock.Restart(); 
             while (window.IsOpen)
             {
                 window.DispatchEvents();
@@ -56,7 +59,8 @@ namespace GameOfLife.SFML
         private void Draw()
         {
             window.Clear(clearColor);
-            // TODO draw the cells
+            life.DrawTo(renderer);
+            window.Draw(renderer);
             window.Display();
         }
 

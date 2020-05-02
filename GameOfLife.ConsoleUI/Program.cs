@@ -13,7 +13,7 @@ namespace GameOfLife.ConsoleUI
             var renderer = new ConsoleRenderer(boardWidth, boardHeight);
             while (true)
             {
-                life.Draw(renderer);
+                life.DrawTo(renderer);
                 await Task.Delay(TimeSpan.FromSeconds(0.15));
                 life.StepForward();
             }
