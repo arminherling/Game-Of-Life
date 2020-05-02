@@ -12,7 +12,7 @@ namespace GameOfLife.SFML
         private RectangleShape slider;
         private Text generationText;
 
-        public GenerationTrackBar(Vector2f barPosition, Vector2f barSize, GameOfLife life)
+        public GenerationTrackBar(Vector2f barPosition, Vector2f barSize, Font font, uint fontSize, GameOfLife life)
         {
             this.life = life;
             bar = new RectangleShape(barSize)
@@ -29,7 +29,7 @@ namespace GameOfLife.SFML
                 Position = new Vector2f(barBounds.Left, bar.Position.Y)
             };
 
-            generationText = new Text("", new Font("Font/OpenSans-Regular.ttf"), 24)
+            generationText = new Text("", font, fontSize)
             {
                 Position = new Vector2f(400, bar.Position.Y-45),
                 OutlineColor = Color.Black,
